@@ -3,90 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Delete My Rootle Account</title>
+  <title>Request Account Deletion - Rootle</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f5f7fa;
-      padding: 2rem;
+      font-family: Arial, sans-serif;
+      padding: 2em;
+      background: #f4f4f4;
       color: #333;
-      max-width: 600px;
-      margin: auto;
     }
     h1 {
-      color: #222;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      margin-bottom: 1.5rem;
+      color: #0066cc;
     }
     form {
-      background: #fff;
-      padding: 1.5rem;
+      background: white;
+      padding: 2em;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    label {
-      display: block;
-      margin-bottom: 0.25rem;
-      font-weight: 600;
-    }
-    input, textarea {
+    input, button {
       width: 100%;
-      padding: 0.6rem;
-      margin-bottom: 1.25rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      background: #1e88e5;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1565c0;
+      padding: 0.75em;
+      margin-top: 1em;
+      font-size: 1em;
     }
     .success {
-      background: #d9fdd3;
-      padding: 1rem;
-      border-radius: 6px;
-      color: #256029;
-      margin-top: 1rem;
+      color: green;
+      margin-top: 1em;
+    }
+    .error {
+      color: red;
+      margin-top: 1em;
     }
   </style>
 </head>
 <body>
-
   <h1>Request Account Deletion</h1>
-  <p>Use this form to request that your Rootle account and associated data be deleted. Please enter the email address associated with your account.</p>
+  <p>Please fill out the form below to request deletion of your Rootle account and associated data.</p>
 
   <form id="delete-form">
-    <label for="email">Email address</label>
+    <label for="email">Email associated with your account:</label>
     <input type="email" id="email" name="email" required />
 
-    <label for="message">Optional message</label>
-    <textarea id="message" name="message" rows="4" placeholder="You may include a message or reason for deletion (optional)"></textarea>
-
-    <button type="submit">Submit request</button>
+    <button type="submit">Request Deletion</button>
+    <p id="response" class=""></p>
   </form>
 
-  <div id="success-message" class="success" style="display: none;">
-    ✅ Your deletion request has been received. We will process it within 7 days.
-  </div>
-
   <script>
-    document.getElementById('delete-form').addEventListener('submit', function(e) {
-      e.preventDefault();
+    const form = document.getElementById("delete-form");
+    const responseEl = document.getElementById("response");
 
-      // Replace this section with real backend integration later
-      document.getElementById('delete-form').style.display = 'none';
-      document.getElementById('success-message').style.display = 'block';
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      responseEl.textContent = "Submitting request...";
+      responseEl.className = "";
+
+      const email = document.getElementById("email").value;
+
+      try {
+        const res = await fetch("https://deleteuseraccount-jkmj6daoaq-uc.a.run.app", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          responseEl.textContent = data.message || "Account deletion request submitted successfully.";
+          responseEl.className = "success";
+        } else {
+          responseEl.textContent = data.error || "Failed to process request.";
+          responseEl.className = "error";
+        }
+      } catch (error) {
+        responseEl.textContent = "Error: " + error.message;
+        responseEl.className = "error";
+      }
     });
   </script>
-
 </body>
 </html>

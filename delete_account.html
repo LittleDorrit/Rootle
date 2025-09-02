@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delete My Rootle Account</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f7fa;
+      padding: 2rem;
+      color: #333;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #222;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin-bottom: 1.5rem;
+    }
+    form {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background: #1e88e5;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1565c0;
+    }
+    .success {
+      background: #d9fdd3;
+      padding: 1rem;
+      border-radius: 6px;
+      color: #256029;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Request Account Deletion</h1>
+  <p>Use this form to request that your Rootle account and associated data be deleted. Please enter the email address associated with your account.</p>
+
+  <form id="delete-form">
+    <label for="email">Email address</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="message">Optional message</label>
+    <textarea id="message" name="message" rows="4" placeholder="You may include a message or reason for deletion (optional)"></textarea>
+
+    <button type="submit">Submit request</button>
+  </form>
+
+  <div id="success-message" class="success" style="display: none;">
+    ✅ Your deletion request has been received. We will process it within 7 days.
+  </div>
+
+  <script>
+    document.getElementById('delete-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Replace this section with real backend integration later
+      document.getElementById('delete-form').style.display = 'none';
+      document.getElementById('success-message').style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>
